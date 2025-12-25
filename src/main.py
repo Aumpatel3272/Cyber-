@@ -30,6 +30,12 @@ def main():
     elif args.cmd == "evaluate":
         out = evaluate(args.data, args.model)
         print(out["report"])
+        print(f"\nAverage Threat Confidence: {out['average_threat_confidence']:.4f}")
+        if out["feature_importance"]:
+            print("\nTop 10 Important Features:")
+            sorted_features = sorted(out["feature_importance"].items(), key=lambda x: x[1], reverse=True)
+            for feature, importance in sorted_features[:10]:
+                print(f"  {feature}: {importance:.4f}")
     else:
         parser.print_help()
 
